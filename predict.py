@@ -2,7 +2,7 @@ from keras.models import load_model
 import os
 from keras.preprocessing.image import ImageDataGenerator
 import numpy as np
-
+from configure import PATH
 
 img_width = 299
 img_height = 299
@@ -11,11 +11,11 @@ nbr_test_samples = 1000
 
 FishNames = ['ALB', 'BET', 'DOL', 'LAG', 'NoF', 'OTHER', 'SHARK', 'YFT']
 
-root_path = '/Users/pengpai/Desktop/python/DeepLearning/Kaggle/NCFM'
+root_path = '/Users/pengpai/Desktop/python/DeepLearning/Kaggle_NCFM'
 
-weights_path = os.path.join(root_path, 'weights.h5')
+weights_path = os.path.join(PATH, 'model/weights.h5')
 
-test_data_dir = os.path.join(root_path, 'data/test_stg1/')
+test_data_dir = os.path.join(PATH, 'data/test_stg1/')
 
 # test data generator for prediction
 test_datagen = ImageDataGenerator(rescale=1./255)

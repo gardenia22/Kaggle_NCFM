@@ -5,17 +5,18 @@ from keras.models import Model
 from keras.optimizers import RMSprop, SGD
 from keras.callbacks import ModelCheckpoint
 from keras.preprocessing.image import ImageDataGenerator
+from configure import PATH
 
 learning_rate = 0.0001
 img_width = 299
 img_height = 299
-nbr_train_samples = 3019
-nbr_validation_samples = 758
+nbr_train_samples = 30 #3024
+nbr_validation_samples = 759
 nbr_epochs = 25
 batch_size = 32
 
-train_data_dir = '/Users/pengpai/Desktop/python/DeepLearning/Kaggle/NCFM/data/train_split'
-val_data_dir = '/Users/pengpai/Desktop/python/DeepLearning/Kaggle/NCFM/data/val_split'
+train_data_dir = PATH+'data/train_split'
+val_data_dir = PATH+'data/val_split'
 
 FishNames = ['ALB', 'BET', 'DOL', 'LAG', 'NoF', 'OTHER', 'SHARK', 'YFT']
 
@@ -38,7 +39,7 @@ optimizer = SGD(lr = learning_rate, momentum = 0.9, decay = 0.0, nesterov = True
 InceptionV3_model.compile(loss='categorical_crossentropy', optimizer = optimizer, metrics = ['accuracy'])
 
 # autosave best Model
-best_model_file = "./weights.h5"
+best_model_file = PATH + "model/weights.h5"
 best_model = ModelCheckpoint(best_model_file, monitor='val_acc', verbose = 1, save_best_only = True)
 
 # this is the augmentation configuration we will use for training
@@ -60,8 +61,8 @@ train_generator = train_datagen.flow_from_directory(
         target_size = (img_width, img_height),
         batch_size = batch_size,
         shuffle = True,
-        # save_to_dir = '/Users/pengpai/Desktop/python/DeepLearning/Kaggle/NCFM/data/visualization',
-        # save_prefix = 'aug',
+        save_to_dir = PATH+'data/train_split/visualization',
+        save_prefix = 'aug',
         classes = FishNames,
         class_mode = 'categorical')
 
@@ -70,8 +71,8 @@ validation_generator = val_datagen.flow_from_directory(
         target_size=(img_width, img_height),
         batch_size=batch_size,
         shuffle = True,
-        #save_to_dir = '/Users/pengpai/Desktop/python/DeepLearning/Kaggle/NCFM/data/visulization',
-        #save_prefix = 'aug',
+        save_to_dir = PATH+'data/val_split/visulization',
+        save_prefix = 'aug',
         classes = FishNames,
         class_mode = 'categorical')
 
